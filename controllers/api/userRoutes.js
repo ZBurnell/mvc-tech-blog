@@ -4,8 +4,7 @@ const { User } = require('../../models');
 router.post('/', async (req, res) => {
   try {
     const userData = await User.create(req.body);
-
-    req.session.save(() => {
+      req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
 
@@ -23,7 +22,7 @@ router.post('/login', async (req, res) => {
     if (!userData) {
       res
         .status(400)
-        .json({ message: 'email or password is incorrect, please try again' });
+        .json({ message: 'The information provided is incorrect, please try again' });
       return;
     }
 
@@ -32,7 +31,7 @@ router.post('/login', async (req, res) => {
     if (!validPassword) {
       res
         .status(400)
-        .json({ message: 'email or password is incorrect, please try again' });
+        .json({ message: 'The information provided is incorrect, please try again' });
       return;
     }
 
@@ -40,9 +39,9 @@ router.post('/login', async (req, res) => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
       
-      res.json({ user: userData, message: 'Happy to have you back!' });
+      res.json({ user: userData, message: 'Long time no see!' });
     });
-
+    
   } catch (err) {
     res.status(400).json(err);
   }
